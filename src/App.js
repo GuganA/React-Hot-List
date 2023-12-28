@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Tasks from './components/Tasks';
 import ManageTask from './components/ManageTask';
 import Footer from './components/Footer';
+import { StoreContext } from './StoreContext';
 
 function App() {
 
@@ -81,16 +82,14 @@ function App() {
     }
 
     return (
-        <div className='container'>
-            <Header onClick={() => setShowAddTask(!showAddTask)} showAddTask={showAddTask} />
-            {showAddTask && <ManageTask onAdd={addTask} />}
-            <Tasks
-                tasks={tass}
-                onUpdate={updateTask}
-                onDelete={deleteTask}
-            />
-            <Footer />
-        </div>
+        <StoreContext.Provider value={[updateTask, deleteTask]}>
+            <div className='container'>
+                <Header onClick={() => setShowAddTask(!showAddTask)} showAddTask={showAddTask} />
+                {showAddTask && <ManageTask onAdd={addTask} />}
+                <Tasks tasks={tass} />
+                <Footer />
+            </div>
+        </StoreContext.Provider>
     );
 }
 

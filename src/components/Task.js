@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FaTimes, FaEdit } from 'react-icons/fa';
 import ManageTask from './ManageTask';
+import { StoreContext } from '../StoreContext';
 
-const Task = ({ task, onDelete, onUpdate }) => {
+const Task = ({ task }) => {
+    const [ onUpdate, deleteTask ] = useContext(StoreContext);
     const [edit, setEdit] = useState(false);
 
     const changeState = () => {
@@ -15,7 +17,7 @@ const Task = ({ task, onDelete, onUpdate }) => {
                 <ManageTask task={task} type={'update'} onAdd={onUpdate} changeState={changeState} />
                 :
                 <>
-                    <h3>{task?.text} <div> <FaEdit style={{ cursor: 'pointer', marginLeft: '0px' }} onClick={() => setEdit(true)} />  <FaTimes style={{ color: 'red', cursor: 'pointer' }} onClick={() => onDelete(task.id)} /></div> </h3>
+                    <h3>{task?.text} <div> <FaEdit style={{ cursor: 'pointer', marginLeft: '0px' }} onClick={() => setEdit(true)} />  <FaTimes style={{ color: 'red', cursor: 'pointer' }} onClick={() => deleteTask(task.id)} /></div> </h3>
                     <p>{task?.day}</p>
                 </>
             }
